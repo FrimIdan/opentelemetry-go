@@ -6,9 +6,9 @@ trace data to Jaeger and the metric data to Prometheus
 The complete flow is:
 
 ```
-                                          -----> Jaeger (trace)
-App + SDK ---> OpenTelemetry Collector ---|
-                                          -----> Prometheus (metrics)
+                                                                                    -----> Jaeger (trace)
+App + SDK ---> "Local" OpenTelemetry Collector ---> OpenTelemetry Collector ---|    -----> Prometheus (metrics)
+                                                                                    -----> Loki (logs) -----> Grafana (ui-logs)
 ```
 
 # Prerequisites
@@ -53,6 +53,13 @@ web-browser to view the generated traces.
 The Prometheus UI is available at
 [http://localhost:9090](http://localhost:9090). Navigate there in your favorite
 web-browser to view the generated metrics, for instance, `testapp_run_total`.
+
+## Grafana
+
+The Grafana UI is available at
+[http://localhost:3000](http://localhost:3000). Navigate there in your favorite
+web-browser to view the generated logs.
+
 
 # Shutting down
 

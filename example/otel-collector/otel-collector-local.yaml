@@ -1,0 +1,42 @@
+# Copyright The OpenTelemetry Authors
+# SPDX-License-Identifier: Apache-2.0
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:9080
+      http:
+        endpoint: 0.0.0.0:9100
+processors:
+extensions:
+  health_check: {}
+exporters:
+  otlp:
+    endpoint: otel-collector:9081
+    tls:
+      insecure: true
+  otlphttp:
+    endpoint: http://otel-collector:9082
+    tls:
+      insecure: true
+  debug:
+#    verbosity: detailed
+
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: []
+      exporters: [otlp, debug]
+
+    metrics:
+      receivers: [otlp]
+      processors: []
+      exporters: [otlp, debug]
+
+    logs:
+      receivers: [otlp]
+      processors: []
+      exporters: [otlphttp, debug]

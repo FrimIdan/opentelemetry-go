@@ -8,11 +8,16 @@ replace (
 )
 
 require (
+	github.com/sirupsen/logrus v1.9.3
+	go.opentelemetry.io/contrib/bridges/otellogrus v0.2.0
 	go.opentelemetry.io/otel v1.27.0
+	go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp v0.0.0-00010101000000-000000000000
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v1.27.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.27.0
+	go.opentelemetry.io/otel/log v0.3.0
 	go.opentelemetry.io/otel/metric v1.27.0
 	go.opentelemetry.io/otel/sdk v1.27.0
+	go.opentelemetry.io/otel/sdk/log v0.3.0
 	go.opentelemetry.io/otel/sdk/metric v1.27.0
 	go.opentelemetry.io/otel/trace v1.27.0
 	google.golang.org/grpc v1.64.0
@@ -43,4 +48,8 @@ replace go.opentelemetry.io/otel/metric => ../../metric
 
 replace go.opentelemetry.io/otel/sdk/metric => ../../sdk/metric
 
+replace go.opentelemetry.io/otel/sdk/log => ../../sdk/log
+
 replace go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc => ../../exporters/otlp/otlpmetric/otlpmetricgrpc
+
+replace go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp => ../../exporters/otlp/otlplog/otlploghttp

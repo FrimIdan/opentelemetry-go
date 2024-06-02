@@ -5,8 +5,15 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: 0.0.0.0:4317
+        endpoint: 0.0.0.0:9081
+      http:
+        endpoint: 0.0.0.0:9082
 processors:
+  resource:
+    attributes:
+      - action: insert
+        key: loki.resource.labels
+        value: service.name,host.name,integration.id
 extensions:
   health_check: {}
 exporters:
@@ -18,16 +25,28 @@ exporters:
     endpoint: 0.0.0.0:9090
     namespace: testapp
   debug:
-
+    verbosity: detailed
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+    tls:
+      insecure: true
+    default_labels_enabled:
+      exporter: true
+      job: true
 service:
   extensions: [health_check]
   pipelines:
     traces:
       receivers: [otlp]
       processors: []
-      exporters: [otlp, debug]
+      exporters: [otlp]
 
     metrics:
       receivers: [otlp]
       processors: []
-      exporters: [prometheus, debug]
+      exporters: [prometheus]
+
+    logs:
+      receivers: [otlp]
+      processors: [resource]
+      exporters: [loki, debug]
